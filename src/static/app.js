@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>${details.description}</p>
           <p><strong>Schedule:</strong> ${details.schedule}</p>
           <p><strong>Availability:</strong> ${spotsLeft} spots left</p>
+          <p><strong>Participants:</strong></p>
+          <ul>
+            ${details.participants.map(participant => `<li class="participant"><span class="participant-email">${participant}</span><button class="delete-participant" data-activity="${name}" data-email="${participant}" title="Unregister">🗑️</button></li>`).join('')}
+          </ul>
         `;
 
         activitiesList.appendChild(activityCard);
@@ -83,4 +87,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize app
   fetchActivities();
+
+  // Handle unregister (delete) actions via event delegation
+  activitiesList.addEventListener('click', async (event) => {
+    if (event.target && event.target.classList.contains('delete-participant')) {
+      const activityName = event.target.dataset.activity;
+      const email = event.target.dataset.email;
+
+      try {
+        const response = await fetch(
+          `/activities/${encodeURIComponent(activityName)}/unregister?email=${encodeURIComponent(email)}`,
+          { method: 'DELETE' }
+        );
+
+        const result = await response.json();
+
+        if (response.ok) {
+          messageDiv.textContent = result.message;
+          messageDiv.className = 'success';
+          // Refresh the activities list to reflect the change
+          fetchActivities();
+        } else {
+          messageDiv.textContent = result.detail || 'An error occurred';
+          messageDiv.className = 'error';
+        }
+
+        messageDiv.classList.remove('hidden');
+        setTimeout(() => {
+          messageDiv.classList.add('hidden');
+        }, 5000);
+      } catch (err) {
+        messageDiv.textContent = 'Failed to unregister. Please try again.';
+        messageDiv.className = 'error';
+        messageDiv.classList.remove('hidden');
+        console.error('Error unregistering:', err);
+      }
+    }
+  });
 });
