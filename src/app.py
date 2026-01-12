@@ -26,6 +26,7 @@ activities = {
         "schedule": "Fridays, 3:30 PM - 5:00 PM",
         "max_participants": 12,
         "location": "Room 101",
+        "participants": ["james@mergington.edu", "alex@mergington.edu"]
             },
             "Basketball": {
                 "description": "Team sport focusing on basketball skills and competitive play",
@@ -62,13 +63,12 @@ activities = {
                 "location": "Room 203",
                 "participants": ["sophia@mergington.edu", "ethan@mergington.edu"]
             },
-            "Science Club": {
-                "description": "Conduct experiments and explore STEM concepts",
-                "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
-                "max_participants": 18,
-                "location": "Science Lab",
-                "participants": ["ava@mergington.edu"]
-        "participants": ["michael@mergington.edu", "daniel@mergington.edu"]
+    "Science Club": {
+        "description": "Conduct experiments and explore STEM concepts",
+        "schedule": "Tuesdays, 3:30 PM - 5:00 PM",
+        "max_participants": 18,
+        "location": "Science Lab",
+        "participants": ["ava@mergington.edu", "michael@mergington.edu", "daniel@mergington.edu"]
     },
     "Programming Class": {
         "description": "Learn programming fundamentals and build software projects",
